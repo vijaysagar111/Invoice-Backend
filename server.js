@@ -5,7 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
-
+const path = require('path')
 const app = express();
 const port = process.env.PORT || 2000;
 
@@ -29,7 +29,12 @@ const usersRouter = require("./routes/users");
 
 app.use("/invoices", invoicesRouter);
 app.use("/users", usersRouter);
+const dirPath = path.join(__dirname, "PDFs");
 
+
+app.get('/pdfs', (req, res) => {
+    res.sendFile(`${dirPath}/Invoice.pdf`);
+})
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
